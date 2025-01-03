@@ -63,3 +63,5 @@ group :test do
 end
 
 gem "devise", "~> 4.9"
+gem "omniauth-telegram", "~> 0.2.1"
+gem "omniauth-rails_csrf_protection", "~> 1.0"
