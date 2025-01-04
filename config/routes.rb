@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { sessions: 'sessions', omniauth_callbacks: 'omniauth_callbacks' }
-  resources :users
+  devise_for :users, controllers: { sessions: 'sessions' }
+  get "/auth/telegram/callback" => "authentications#telegram"
+  get "/auth/github/callback" => "authentications#github"
+  get "/auth/google_oauth2/callback" => "authentications#github"
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)

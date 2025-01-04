@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: %i[telegram]
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
   validates :role, presence: true
 
