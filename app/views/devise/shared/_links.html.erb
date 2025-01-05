@@ -10,6 +10,15 @@
   <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
 <% end %>
 
+<script
+  async src="https://telegram.org/js/telegram-widget.js?22"
+  data-telegram-login="<%= ENV["BOT_NAME"] %>"
+  data-size="medium"
+  data-userpic="false"
+  data-auth-url="<%= users_auth_telegram_callback_path %>"
+  data-request-access="write">
+</script>
+
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
     <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false } %><br />
