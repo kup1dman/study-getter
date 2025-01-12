@@ -1,5 +1,3 @@
-wname: CI
-
 on:
   pull_request:
   push:
