@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_many :orders
+  has_many :orders, dependent: :destroy
   belongs_to :desired_executor, class_name: "User", foreign_key: "executor_id", optional: true
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
