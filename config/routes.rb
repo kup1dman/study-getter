@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {  omniauth_callbacks: 'devises/omniauth_callbacks' }
+  devise_for :users, controllers: {  omniauth_callbacks: "devises/omniauth_callbacks" }
   devise_scope :user do
     get "users/auth/telegram/callback" => "devises/omniauth_callbacks#telegram"
   end

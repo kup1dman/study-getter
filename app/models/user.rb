@@ -10,6 +10,6 @@ class User < ApplicationRecord
   enum :role, { client: 1, executor: 2, admin: 3 }
 
   def email_required?
-    self.provider == 'telegram' ? false : true
+    self.provider == "telegram" ? false : true
   end
 end

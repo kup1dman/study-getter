@@ -1,6 +1,6 @@
 module Devises
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-    skip_before_action :verify_authenticity_token, only: [:github, :google_oauth2]
+    skip_before_action :verify_authenticity_token, only: [ :github, :google_oauth2 ]
     def telegram
       @user = User.find_or_create_by(provider: :telegram, uid: params[:id]) do |user|
         user.name = params[:first_name]
