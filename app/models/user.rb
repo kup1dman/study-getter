@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  has_many :orders
+  belongs_to :desired_executor, class_name: "User", foreign_key: "executor_id", optional: true
+
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
          :validatable, :omniauthable, omniauth_providers: %i[github google_oauth2]
 
