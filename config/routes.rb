@@ -12,15 +12,15 @@ Rails.application.routes.draw do
 
   root "home#index"
 
-  namespace :clients do
-    root "home#index"
+  namespace :client do
+    resources :orders
   end
 
-  namespace :admins do
-    root "home#index"
+  namespace :executor do
+    resources :orders
   end
 
-  namespace :executors do
-    root "home#index"
+  namespace :admin do
+    resources :orders
   end
 end
