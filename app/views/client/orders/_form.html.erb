@@ -1,0 +1,7 @@
+<%= form_with url: client_orders_path, method: :post do |form| %>
+  <%= form.select :subject, Order::SUBJECTS.map { |key, value|  [value, key]} %>
+  <%= form.select :type, Order::TYPES.map { |key, value|  [value, key]} %>
+  <%= form.date_field :deadline %>
+  <%= form.text_field :title, placeholder: "Название работы(Например: ЛР1)" %>
+  <%= form.select :title, placeholder: "Название работы(Например: ЛР1)" %>
+<% end %>

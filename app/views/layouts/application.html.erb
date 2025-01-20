@@ -16,9 +16,30 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= turbo_frame_tag "modal" %>
   </head>
 
   <body>
+    <header>
+      <% if current_user %>
+        <% case current_user.role %>
+      <% when 'client' %>
+          <%= link_to "Новый заказ", new_client_order_path, data: { turbo_frame: 'modal' } %>
+          <%= current_user.name %>
+          <%= link_to "Выход", destroy_user_session_path, data: { turbo_method: "delete" } %>
+        <% when 'executor' %>
+          <%= "Исполнитель" %>
+          <%= current_user.name %>
+        <% end %>
+      <% elsif current_page?(root_url) %>
+        <%= link_to "Заказать", "" %>
+        <%= link_to "Вход", new_user_session_path %>
+      <% elsif current_page?(new_user_registration_path) || current_page?(new_user_session_url) %>
+        <%= link_to "Вход", new_user_session_path %>
+        <%= link_to "Регистрация", new_user_registration_path %>
+      <% end %>
+    </header>
+
     <%= yield %>
   </body>
 </html>
