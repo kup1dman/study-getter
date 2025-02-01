@@ -1,16 +1,11 @@
 class Order < ApplicationRecord
   belongs_to :user
+  has_one :subject, class_name: "OrderSubject"
+  has_one :type, class_name: "OrderType"
   has_many_attached :files
 
-  SUBJECTS = {
-    1 => 'КПО',
-    2 => 'ОАиП',
-    3 => 'ЛАиГ'
-  }
+  validates :subject, presence: true
+  validates :type, presence: true
+  validates :deadline, presence: true
 
-  TYPES = {
-    1 => 'Контрольная',
-    2 => 'Курсовая',
-    3 => 'Лабораторная'
-  }
 end

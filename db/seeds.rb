@@ -7,3 +7,15 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+UserGroup.create(uid: '381570')
+UserGroup.create(uid: '381571')
+UserGroup.create(uid: '381572')
+
+OrderSubject.create(name: 'КПО')
+OrderSubject.create(name: 'ОАиП')
+OrderSubject.create(name: 'ЛАиГ')
+
+OrderType.create(name: 'Курсовая')
+OrderType.create(name: 'Контрольная')
+OrderType.create(name: 'Лабораторная')
+OrderType.create(name: 'Практическая')
