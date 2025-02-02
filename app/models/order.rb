@@ -8,4 +8,14 @@ class Order < ApplicationRecord
   validates :type, presence: true
   validates :deadline, presence: true
 
+  enum :status, {
+    pending: 1,
+    waiting_for_answer: 2,
+    approved: 3,
+    checking_payment: 4,
+    waiting_for_payment: 5,
+    in_process: 6,
+    done: 7,
+    rejected: 8
+  }
 end
