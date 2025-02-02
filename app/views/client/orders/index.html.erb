@@ -1,0 +1,9 @@
+<% current_user.orders.each do |order| %>
+  <div>
+    <p><strong>Название:</strong> <%= order.title %>
+      <strong>Предмет:</strong> <%= order.subject&.name %>
+      <strong>Комментарий:</strong> <%= order.comment %>
+      <strong>Вид работы:</strong> <%= order.type&.name %>
+    </p>
+  </div>
+<% end %>
