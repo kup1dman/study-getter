@@ -15,9 +15,11 @@ module Client
         type: OrderType.find_by(id: params.dig(:order, :type))
         )
       )
-      current_user.desired_executor ||= User.find_by(id: params.dig(:order, :desired_executor))
-      current_user.group ||= UserGroup.find_by(id: params.dig(:order, :group))
-      if @order.save && current_user.save
+      current_user.desired_executor = User.find_by(id: params.dig(:order, :desired_executor))
+      current_user.group = UserGroup.find_by(id: params.dig(:order, :group))
+      if @order.valid? & current_user.valid?
+        @order.save
+        current_user.save if current_user.changed?
         redirect_to client_orders_path
       else
         render :new, status: :unprocessable_entity
@@ -29,7 +31,7 @@ module Client
     def order_params
       params.
         require(:order).
-        permit(:subject, :type, :deadline, :title, :group, :desired_executor, :volume_from, :volume_to, :comment)
+        permit(:subject, :type, :deadline, :title, :group, :desired_executor, :files, :volume_from, :volume_to, :comment)
     end
   end
 end

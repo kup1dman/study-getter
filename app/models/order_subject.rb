@@ -1,3 +1,3 @@
 class OrderSubject < ActiveRecord::Base
-  has_one :order
+  belongs_to :order, optional: true
 end
