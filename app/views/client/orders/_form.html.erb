@@ -1,18 +1,6 @@
 <%= form_with model: [:client, @order] do |form| %>
-  <% if @order.errors.any? %>
-    <div id="error_explanation">
-      <ul>
-        <% @order.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <% if current_user.errors[:group].any? %>
-    <% current_user.errors.full_messages_for(:group).each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  <% end %>
+  <%= render "shared/error_messages", resource: @order %>
+  <%= render "shared/error_messages", resource: current_user, category: :group %>
 
   <%= form.collection_select :subject, OrderSubject.all, :id, :name, prompt: 'Предмет' %>
   <%= form.collection_select :type, OrderType.all, :id, :name, prompt: 'Тип работы' %>

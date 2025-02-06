@@ -1,0 +1,17 @@
+<% if resource.errors.any? %>
+  <div id="error_explanation" data-turbo-cache="false">
+    <% if local_assigns[:category] %>
+      <ul>
+        <% resource.errors.full_messages_for(category).each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <ul>
+        <% resource.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+<% end %>

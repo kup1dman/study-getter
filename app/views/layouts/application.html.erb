@@ -21,9 +21,9 @@
 
   <body>
     <header>
-      <% if current_user %>
-        <% case current_user.role %>
-      <% when 'client' %>
+      <% if user_signed_in? %>
+        <% case current_user&.role %>
+        <% when 'client' %>
           <%= link_to "Новый заказ", new_client_order_path, data: { turbo_frame: 'modal' } %>
           <%= current_user.name %>
           <%= link_to "Выход", destroy_user_session_path, data: { turbo_method: "delete" } %>
@@ -31,12 +31,9 @@
           <%= "Исполнитель" %>
           <%= current_user.name %>
         <% end %>
-      <% elsif current_page?(root_url) %>
+      <% else %>
         <%= link_to "Заказать", "" %>
         <%= link_to "Вход", new_user_session_path %>
-      <% elsif current_page?(new_user_registration_path) || current_page?(new_user_session_url) %>
-        <%= link_to "Вход", new_user_session_path %>
-        <%= link_to "Регистрация", new_user_registration_path %>
       <% end %>
     </header>
 
