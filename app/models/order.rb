@@ -1,5 +1,5 @@
 class Order < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   has_one :subject, dependent: :nullify
   has_one :type, dependent: :nullify
   has_one :group, dependent: :nullify
@@ -9,6 +9,7 @@ class Order < ApplicationRecord
   validates :subject, presence: true
   validates :type, presence: true
   validates :deadline, presence: true
+  validates :group, presence: true
 
   enum :status, {
     pending: 1,

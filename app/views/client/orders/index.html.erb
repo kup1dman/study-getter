@@ -1,3 +1,5 @@
+<%= turbo_page_requires_reload %>
+
 <% current_user.orders.each do |order| %>
   <div>
     <p><strong>Название:</strong> <%= order.title %>

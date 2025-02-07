@@ -2,12 +2,12 @@
   <%= render "shared/error_messages", resource: @order %>
   <%= render "shared/error_messages", resource: current_user, category: :group %>
 
-  <%= form.collection_select :subject, OrderSubject.all, :id, :name, prompt: 'Предмет' %>
-  <%= form.collection_select :type, OrderType.all, :id, :name, prompt: 'Тип работы' %>
+  <%= form.collection_select :subject, Subject.all, :id, :name, prompt: 'Предмет' %>
+  <%= form.collection_select :type, Type.all, :id, :name, prompt: 'Тип работы' %>
   <%= form.date_field :deadline %>
   <%= form.text_field :title, placeholder: "Название работы(Например: ЛР1)" %>
-  <%= form.collection_select :group, UserGroup.all, :id, :uid, prompt: 'Группа', selected: current_user.group&.id %>
-  <%= form.collection_select :desired_executor, User.all.where(role: :executor), :id, :name, selected: current_user.desired_executor&.id, prompt: 'Желаемый исполнитель' %>
+  <%= form.collection_select :group, Group.all, :id, :uid, prompt: 'Группа', selected: current_user&.group&.id %>
+  <%= form.collection_select :desired_executor, User.all.where(role: :executor), :id, :name, selected: current_user&.desired_executor&.id, prompt: 'Желаемый исполнитель' %>
   <%= form.file_field :files, prompt: 'Ваши файлы' %>
   <%= form.text_field :volume_from, placeholder: 'От' %>
   <%= form.text_field :volume_to, placeholder: 'До' %>

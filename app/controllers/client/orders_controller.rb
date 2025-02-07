@@ -1,26 +1,33 @@
 module Client
   class OrdersController < ApplicationController
-    before_action :authenticate_user!
+    before_action :authenticate_user!, except: [ :new, :create ]
     def index
       @orders = current_user.orders
     end
 
     def new
-      @order = current_user.orders.new
+      @order = Order.new
     end
 
     def create
-      @order = current_user.orders.new(order_params.except(:group, :desired_executor).merge(
-        subject: OrderSubject.find_by(id: params.dig(:order, :subject)),
-        type: OrderType.find_by(id: params.dig(:order, :type))
+      @order = Order.new(order_params.merge(
+        subject: Subject.find_by(id: params.dig(:order, :subject)),
+        type: Type.find_by(id: params.dig(:order, :type)),
+        group: Group.find_by(id: params.dig(:order, :group)),
+        desired_executor: User.find_by(id: params.dig(:order, :desired_executor)),
         )
       )
-      current_user.desired_executor = User.find_by(id: params.dig(:order, :desired_executor))
-      current_user.group = UserGroup.find_by(id: params.dig(:order, :group))
-      if @order.valid? & current_user.valid?
+      if @order.valid?
         @order.save
-        current_user.save if current_user.changed?
-        redirect_to client_orders_path
+        if user_signed_in?
+          @order.update(user: current_user)
+          current_user.group = @order.group
+          current_user.desired_executor = @order.desired_executor
+          current_user.save if current_user.changed?
+          redirect_to client_orders_path
+        else
+          redirect_to new_user_session_path
+        end
       else
         render :new, status: :unprocessable_entity
       end
