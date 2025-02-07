@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_02_172515) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_07_180159) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -42,20 +42,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_02_172515) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "order_subjects", force: :cascade do |t|
-    t.string "name"
-    t.bigint "order_id"
+  create_table "groups", force: :cascade do |t|
+    t.string "uid"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["order_id"], name: "index_order_subjects_on_order_id"
-  end
-
-  create_table "order_types", force: :cascade do |t|
-    t.string "name"
     t.bigint "order_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["order_id"], name: "index_order_types_on_order_id"
+    t.index ["order_id"], name: "index_groups_on_order_id"
+    t.index ["user_id"], name: "index_groups_on_user_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -69,15 +63,25 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_02_172515) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.integer "response", default: 0
+    t.bigint "executor_id"
+    t.index ["executor_id"], name: "index_orders_on_executor_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
-  create_table "user_groups", force: :cascade do |t|
-    t.string "uid"
-    t.bigint "user_id"
+  create_table "subjects", force: :cascade do |t|
+    t.string "name"
+    t.bigint "order_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_user_groups_on_user_id"
+    t.index ["order_id"], name: "index_subjects_on_order_id"
+  end
+
+  create_table "types", force: :cascade do |t|
+    t.string "name"
+    t.bigint "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_types_on_order_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -101,8 +105,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_02_172515) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "order_subjects", "orders"
-  add_foreign_key "order_types", "orders"
+  add_foreign_key "groups", "orders"
+  add_foreign_key "groups", "users"
   add_foreign_key "orders", "users"
-  add_foreign_key "user_groups", "users"
+  add_foreign_key "subjects", "orders"
+  add_foreign_key "types", "orders"
 end

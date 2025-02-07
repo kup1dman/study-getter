@@ -1,7 +1,9 @@
 class Order < ApplicationRecord
   belongs_to :user
-  has_one :subject, class_name: "OrderSubject", dependent: :nullify
-  has_one :type, class_name: "OrderType", dependent: :nullify
+  has_one :subject, dependent: :nullify
+  has_one :type, dependent: :nullify
+  has_one :group, dependent: :nullify
+  belongs_to :desired_executor, class_name: "User", foreign_key: "executor_id", optional: true
   has_many_attached :files
 
   validates :subject, presence: true

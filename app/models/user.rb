@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_many :orders, dependent: :destroy
-  has_one :group, class_name: "UserGroup"
+  has_one :group, dependent: :nullify
   belongs_to :desired_executor, class_name: "User", foreign_key: "executor_id", optional: true
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
